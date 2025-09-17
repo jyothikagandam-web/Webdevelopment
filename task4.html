@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio - Naga Jyothika</title>
+  <meta name="description" content="Personal portfolio showcasing projects and skills">
+  <style>
+    :root{
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --accent: #2563eb; /* blue */
+      --muted: #6b7280;
+      --dark: #0f172a;
+    }
+
+    *{box-sizing: border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background:var(--bg);
+      color:var(--dark);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ===== Header===== */
+    header.header {
+      background: linear-gradient(90deg, #0b1220 0%, #25406a 100%);
+      color: white;
+      padding: 28px 20px;
+    }
+
+    .nav-row{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .logo{font-weight:700;letter-spacing:0.2px}
+
+    nav.navlinks{display:flex;gap:18px;align-items:center}
+    nav.navlinks a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:600}
+    nav.navlinks a:hover{text-decoration:underline}
+
+    .menu-toggle{display:none;background:transparent;border:2px solid rgba(255,255,255,0.12);padding:6px;border-radius:8px;color:white}
+
+    .hero{
+      max-width:1100px;
+      margin:18px auto 0;
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:28px;
+      align-items:center;
+      padding:18px 0 40px;
+    }
+
+    .hero-intro h1{font-size:30px;margin:0 0 10px}
+    .hero-intro p{margin:0 0 14px;color:rgba(255,255,255,0.9)}
+
+    .cta-row{display:flex;gap:12px}
+    .btn{background:var(--accent);color:white;padding:10px 16px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .btn.secondary{background:transparent;border:2px solid rgba(255,255,255,0.12)}
+
+    .hero-card{background:rgba(255,255,255,0.06);padding:18px;border-radius:12px;text-align:center}
+    .hero-card img{width:100%;height:auto;border-radius:8px}
+
+    /* ===== Main content ===== */
+    main{max-width:1100px;margin:24px auto;padding:0 20px}
+    section.card{background:var(--card);border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    h2{margin-top:0}
+
+    /* About / Skills */
+    .about-grid{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+    .skills{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{background:#eef2ff;color:var(--dark);padding:8px 10px;border-radius:999px;font-weight:600}
+
+    /* Projects grid */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .project-card{padding:14px;border-radius:10px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid rgba(15,23,42,0.04)}
+    .project-card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+    .project-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .project-meta small{color:var(--muted)}
+
+    .project-actions{display:flex;gap:8px;margin-top:12px}
+    .link-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:8px 10px;border-radius:8px;text-decoration:none;font-weight:700}
+
+    /* Contact form */
+    form.contact-form{max-width:700px;margin:0 auto;display:grid;gap:10px}
+    input[type=text],input[type=email],textarea{padding:12px;border-radius:8px;border:1px solid #e6eef8;font-size:15px}
+    .note{color:var(--muted);font-size:14px}
+    .success{background:#ecfeec;border:1px solid #b7f5c1;padding:10px;border-radius:8px;color:#145214}
+
+    /* <!-- To-Do List Section --> */
+    <section id="todo" class="card">
+      <h2>To-Do List</h2>
+      <p class="note">Add tasks, mark them as done, and they’ll be saved in your browser (local storage)</p>
+      
+      <div style="display:flex;gap:10px;margin-bottom:12px">
+        <input type="text" id="taskInput" placeholder="Enter a new task" style="flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef8">
+        <button id="addTaskBtn" class="btn">Add</button>
+      </div>
+      
+      <ul id="taskList" style="list-style:none;padding:0;margin:0"></ul>
+    </section>
+
+    /* Footer */
+    footer{max-width:1100px;margin:10px auto 60px;padding:12px 20px;color:var(--muted);text-align:center}
+
+    /* Responsive rules */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width:720px){
+      .nav-row{padding:0}
+      nav.navlinks{display:none;position:fixed;right:12px;top:72px;background:var(--card);padding:14px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.12)}
+      nav.navlinks.open{display:flex;flex-direction:column;gap:10px}
+      .menu-toggle{display:inline-block}
+      .hero-intro h1{font-size:24px}
+      header.header{padding:18px 12px}
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="header">
+    <div class="nav-row">
+      <div class="logo">Naga Jyothika<span style="color:#9ad1ff">.</span></div>
+      <nav>
+        <button class="menu-toggle" aria-label="Toggle menu" id="menuBtn">☰</button>
+        <div class="navlinks" id="navLinks">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <a href="#resume" target="_blank">Resume</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="hero" id="home" aria-labelledby="hero-heading">
+      <div class="hero-intro">
+        <h1 id="hero-heading">Hi, I am <strong>Jyothika</strong></h1>
+        <p style="opacity:0.95">I build clean and responsive websites using HTML, CSS, and JavaScript. Below are my projects and contact details. Replace this text with a short intro about yourself.</p>
+        <div class="cta-row">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn secondary" href="#contact">Contact Me</a>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-hidden="false">
+        <img src="https://via.placeholder.com/360x220.png?text=Portfolio+Preview" alt="Portfolio preview">
+        <p style="margin-top:10px;color:rgba(255,255,255,0.85);font-size:14px">Project highlights & quick links</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- About Section -->
+    <section id="about" class="card">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <div>
+          <p>I am a frontend developer (or student) focused on building accessible and responsive user interfaces. I enjoy learning new tools and improving user experiences. Replace this paragraph with your real bio, experience, and goals.</p>
+          <p class="note">Skills</p>
+          <div class="skills">
+            <div class="chip">HTML</div>
+            <div class="chip">CSS</div>
+            <div class="chip">JavaScript</div>
+            <div class="chip">Responsive Design</div>
+            <div class="chip">Git</div>
+          </div>
+        </div>
+        <aside style="text-align:center">
+          <img src="profilepic.jpeg.jpg" alt="Jyothika" class="profile-pic">
+          <div class="note">Location • Hyderabad</div>
+          <div style="margin-top:8px">
+            <a class="link-btn" href="#contact">Hire / Contact</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="card">
+      <h2>Projects</h2>
+      <p class="note">A selection of projects I built while learning web development. Click View to open (if files are present).</p>
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project-card">
+          <img src="https://via.placeholder.com/600x300.png?text=Task+1+Basic+Webpage" alt="Task 1">
+          <h3>Task 1 — Basics</h3>
+          <p class="note">HTML/CSS/JS simple webpage with interactivity.</p>
+          <div class="project-meta"><small>Frontend • Beginner</small><span>⭐ 3/5</span></div>
+          <div class="project-actions">
+            <a class="link-btn" href="https://github.com/pavanchanda169/WebdevelopmentTasks" target="_blank">View</a>
+            <a class="link-btn" href="#" onclick="openCode('task1')">Code</a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <img src="https://via.placeholder.com/600x300.png?text=Task+2+Intermediate" alt="Task 2">
+          <h3>Task 2 — Intermediate</h3>
+          <p class="note">Contact form, responsive layout, and to-do list (DOM manipulation).</p>
+          <div class="project-meta"><small>Frontend • Intermediate</small><span>⭐ 4/5</span></div>
+          <div class="project-actions">
+            <a class="link-btn" href="https://github.com/pavanchanda169/WebdevelopmentTaskshttps://github.com/pavanchanda169/WebdevelopmentTasks" target="_blank">View</a>
+            <a class="link-btn" href="#" onclick="openCode('task2')">Code</a>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card">
+          <img src="https://via.placeholder.com/600x300.png?text=Task+3+Advanced" alt="Task 3">
+          <h3>Task 3 — Advanced</h3>
+          <p class="note">Responsive design, quiz/carousel, and API data fetching.</p>
+          <div class="project-meta"><small>Frontend • Advanced</small><span>⭐ 4.5/5</span></div>
+          <div class="project-actions">
+            <a class="link-btn" href="https://github.com/pavanchanda169/WebdevelopmentTasks" target="_blank">View</a>
+            <a class="link-btn" href="#" onclick="openCode('task3')">Code</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <p class="note">Send me a message — (this form validates before submit)</p>
+      <form class="contact-form" id="contactForm" novalidate>
+        <input type="text" id="cname" placeholder="Your name" required minlength="2">
+        <input type="email" id="cemail" placeholder="Your email" required>
+        <textarea id="cmessage" rows="6" placeholder="Your message (min 10 chars)" required minlength="10"></textarea>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button type="submit" class="btn">Send Message</button>
+          <div id="formStatus" aria-live="polite"></div>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Built with ❤️ • Replace links with your GitHub / LinkedIn</div>
+  </footer>
+
+  <script>
+    // ---------- Mobile menu toggle ----------
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    if(menuBtn){
+      menuBtn.addEventListener('click', ()=>{
+        navLinks.classList.toggle('open');
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', !expanded);
+      });
+    }
+
+    // ---------- Smooth focus for anchor links ----------
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        // if it's an in-page anchor, close mobile menu
+        if(a.getAttribute('href').startsWith('#')){
+          if(navLinks.classList.contains('open')) navLinks.classList.remove('open');
+        }
+      });
+    });
+
+    // ---------- Contact form validation ----------
+    const contactForm = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      statusEl.innerHTML = '';
+      const name = document.getElementById('cname').value.trim();
+      const email = document.getElementById('cemail').value.trim();
+      const message = document.getElementById('cmessage').value.trim();
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if(name.length < 2){
+        statusEl.innerHTML = '<div class="note">Please enter a valid name (min 2 characters).</div>';
+        return;
+      }
+      if(!emailRegex.test(email)){
+        statusEl.innerHTML = '<div class="note">Please enter a valid email address.</div>';
+        return;
+      }
+      if(message.length < 10){
+        statusEl.innerHTML = '<div class="note">Message should be at least 10 characters.</div>';
+        return;
+      }
+
+      // Simulate successful submission (replace with real endpoint if available)
+      statusEl.innerHTML = '<div class="success">Message sent! I will get back to you soon.</div>';
+      contactForm.reset();
+
+      // Optional: store last message locally for demo purposes
+      try{
+        localStorage.setItem('lastMessage', JSON.stringify({name,email,message,ts:Date.now()}));
+      }catch(e){/* ignore */}
+    });
+
+    // ---------- helper to open code (demo) ----------
+    function openCode(id){
+      alert('Open the corresponding project file in your editor (eg. "task'+(id==='task1'? '1': id==='task2' ? '2' : '3')+' .html").');
+    }
+
+    // Ensure header text is visible even if CSS not loaded: fallback text color set inline via styles in header markup.
+  </script>
+</body>
+</html>
